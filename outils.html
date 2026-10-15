@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outils vibe coding</title>
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --text: #1d2330;
+      --muted: #5c6577;
+      --border: #dde1e8;
+      --accent: #3b5bdb;
+      --accent-text: #ffffff;
+      --chip: #eef1f6;
+      --radius: 10px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #14171d;
+        --surface: #1d2129;
+        --text: #e6e9ef;
+        --muted: #9aa3b5;
+        --border: #2e3440;
+        --accent: #748ffc;
+        --accent-text: #10131a;
+        --chip: #262b35;
+        color-scheme: dark;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #14171d;
+      --surface: #1d2129;
+      --text: #e6e9ef;
+      --muted: #9aa3b5;
+      --border: #2e3440;
+      --accent: #748ffc;
+      --accent-text: #10131a;
+      --chip: #262b35;
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+    header { padding-block: 40px 8px; }
+    header h1 { margin: 0 0 4px; font-size: 1.8rem; }
+    header p { margin: 0; color: var(--muted); max-width: 70ch; }
+    a { color: var(--accent); }
+
+    .controls {
+      position: sticky;
+      top: env(safe-area-inset-top, 0px);
+      z-index: 1;
+      background: var(--bg);
+      padding-block: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .filtres { display: flex; flex-wrap: wrap; gap: 6px; }
+    .filtres button {
+      font: inherit;
+      font-size: 0.9rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .filtres button[aria-pressed="true"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-text);
+      font-weight: 600;
+    }
+    .filtres .nb { opacity: 0.7; margin-left: 4px; font-variant-numeric: tabular-nums; }
+    .recherche { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .recherche input {
+      flex: 1;
+      min-width: 0;
+      font: inherit;
+      color: inherit;
+      padding: 8px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    #compteur { color: var(--muted); font-size: 0.9rem; white-space: nowrap; }
+
+    .grille {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+      padding-bottom: 32px;
+    }
+    .carte {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .carte h2 { margin: 0; font-size: 1.05rem; }
+    .carte h2 a { color: var(--text); text-decoration: none; }
+    .carte h2 a:hover { color: var(--accent); text-decoration: underline; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--muted);
+    }
+    .tag.cat { color: var(--accent); font-weight: 600; }
+    .usage { margin: 0; }
+    .acces {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+      border-left: 3px solid var(--border);
+      padding-left: 8px;
+    }
+    .date { margin-top: auto; font-size: 0.8rem; color: var(--muted); }
+    .vide { color: var(--muted); padding: 24px 0; }
+    footer { color: var(--muted); font-size: 0.85rem; padding-block: 0 40px; }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <h1>Outils vibe coding</h1>
+    <p>
+      Outils et guides pour développer avec l'IA, classés par tâche. Pour chaque
+      outil : à quoi il sert, les conditions d'accès et la date de vérification.
+    </p>
+  </header>
+
+  <div class="controls wrap">
+    <div class="filtres" id="filtres" role="group" aria-label="Filtrer par catégorie"></div>
+    <div class="recherche">
+      <input type="search" id="recherche" placeholder="Rechercher (nom, usage, MCP, gratuit…)" aria-label="Rechercher">
+      <span id="compteur" aria-live="polite"></span>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div class="grille" id="grille"></div>
+  </main>
+
+  <footer class="wrap">
+    Source : <a href="https://github.com/Scap-Mehdi/awesome-vibecoding">Scap-Mehdi/awesome-vibecoding</a>
+    (CC0 1.0), README lu le 15/10/2026. « Vérifier les tarifs » signifie que le prix
+    n'a pas été vérifié en détail. La date de vérification confirme l'offre et les
+    conditions d'accès à ce jour-là ; ce n'est ni une date de sortie, ni un audit de sécurité.
+  </footer>
+
+  <script>
+    const CATEGORIES = {
+      code: "Code",
+      apps: "App & UI",
+      context: "Contexte & specs",
+      quality: "Test & revue",
+      delivery: "Déploiement",
+      operations: "Espaces & usage",
+      learning: "Apprendre",
+    };
+
+    const OUTILS = [
+      // Code & édition
+      { cat: "code", nom: "Aider", url: "https://github.com/Aider-AI/aider", type: "CLI", usage: "Programmation en binôme dans le terminal, avec modèles cloud ou locaux et intégration Git", acces: "Client open source ; coûts d'API ou de modèle local", date: "2026-09-18" },
+      { cat: "code", nom: "Claude Code", url: "https://code.claude.com/docs/en/overview", type: "CLI", usage: "Assistant de code agentique pour le terminal et les projets", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "code", nom: "Cline", url: "https://github.com/cline/cline", type: "", usage: "Agent de code dans l'IDE, le terminal et sur ordinateur, avec outils fichiers, commandes et navigateur", acces: "Client + fournisseur de modèle ; vérifier les tarifs", date: "2026-09-18" },
+      { cat: "code", nom: "Cursor", url: "https://www.cursor.com/", type: "IDE", usage: "Éditeur et agent pour implémenter, déboguer et relire du code", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "code", nom: "Gemini CLI", url: "https://github.com/google-gemini/gemini-cli", type: "CLI", usage: "Agent de code open source dans le terminal", acces: "Clé API, Vertex ou entreprise éligible ; l'accès par abonnement grand public a été retiré", date: "2026-09-18" },
+      { cat: "code", nom: "GitHub Copilot", url: "https://github.com/features/copilot", type: "", usage: "Assistance au code et agents sur GitHub et les IDE compatibles", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "code", nom: "Goose", url: "https://github.com/aaif-goose/goose", type: "CLI", usage: "Agent local extensible, en version bureau et CLI, avec outils MCP", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "code", nom: "Kiro", url: "https://kiro.dev", type: "IDE", usage: "Agent de code AWS (IDE et CLI) qui travaille avec des spécifications et des tests", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "code", nom: "OpenAI Codex CLI", url: "https://openai.com/codex/", type: "CLI", usage: "Agent de code OpenAI exécuté en local dans le terminal", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "code", nom: "Pi", url: "https://github.com/earendil-works/pi", type: "CLI", usage: "Agent de code extensible pour le terminal, intégrable via un SDK", acces: "Client sous licence MIT ; conditions du modèle à part", date: "2026-09-18" },
+
+      // App & UI
+      { cat: "apps", nom: "Bolt.new", url: "https://bolt.new/", type: "Web", usage: "Création d'apps en langage naturel (StackBlitz)", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "apps", nom: "Coderblock", url: "https://coderblock.ai/", type: "Web", usage: "App web full-stack créée en discutant, avec un backend Supabase par app, aperçu en direct et déploiement en un clic", acces: "Crédits gratuits au départ (une seule fois) ; payant à partir d'environ 20 $/mois ; vérifier les tarifs", date: "2026-10-11" },
+      { cat: "apps", nom: "Dyad", url: "https://github.com/dyad-sh/dyad", type: "Desktop", usage: "Création d'apps en local, avec le fournisseur de modèle de votre choix", acces: "Vérifier les tarifs ; app locale + coûts du fournisseur de modèle", date: "2026-09-18" },
+      { cat: "apps", nom: "Lovable", url: "https://lovable.dev/", type: "Web", usage: "Génération d'apps full-stack avec Supabase", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "apps", nom: "Massvai", url: "https://massvai.com", type: "Web", usage: "App Next.js full-stack à partir d'un prompt, avec Supabase, export GitHub et déploiement Vercel", acces: "Plan gratuit avec 100 crédits de bienvenue ; plans payants avec crédits mensuels ; vérifier les tarifs", date: "2026-10-11" },
+      { cat: "apps", nom: "Onlook", url: "https://www.onlook.com/", type: "Web", usage: "Édition visuelle des interfaces tout en travaillant le code", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "apps", nom: "Replit", url: "https://replit.com/", type: "Web", usage: "Construction et itération d'apps avec Replit Agent", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "apps", nom: "v0", url: "https://v0.app/", type: "Web", usage: "Génération d'UI et de composants React (Vercel)", acces: "Vérifier les tarifs", date: "2026-09-18" },
+
+      // Contexte, specs & intégrations
+      { cat: "context", nom: "Caliber", url: "https://github.com/caliber-ai-org/ai-setup", type: "CLI", usage: "Génère et synchronise les configs d'agents pour Claude Code, Cursor et Codex", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "context", nom: "Context7", url: "https://github.com/upstash/context7", type: "MCP", usage: "Récupère la documentation des bibliothèques pour donner du contexte", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "context", nom: "Filesystem MCP", url: "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem", type: "MCP", usage: "Accès contrôlé des agents aux fichiers du projet", acces: "Vérifier les tarifs ; implémentation de référence, sans garantie de production", date: "2026-09-18" },
+      { cat: "context", nom: "GitHub MCP", url: "https://github.com/github/github-mcp-server", type: "MCP", usage: "Branche les dépôts, issues et pull requests", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "context", nom: "Neon", url: "https://github.com/neondatabase/mcp-server-neon", type: "MCP", usage: "Connecte le développement aux bases de données Neon", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "context", nom: "Notion MCP", url: "https://developers.notion.com/guides/mcp/overview", type: "MCP", usage: "MCP officiel hébergé pour chercher, lire et modifier du contenu Notion", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "context", nom: "OpenSpec", url: "https://github.com/Fission-AI/OpenSpec", type: "", usage: "Framework de développement piloté par les specs", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "context", nom: "Supabase MCP", url: "https://github.com/supabase/mcp", type: "MCP", usage: "MCP officiel pour les schémas, requêtes et réglages de projet Supabase", acces: "Vérifier les tarifs", date: "2026-09-18" },
+
+      // Test, revue & sécurité
+      { cat: "quality", nom: "Agent QA", url: "https://github.com/vostride/agent-qa", type: "MCP", usage: "Écrire et lancer des tests web et mobile en langage naturel", acces: "Licence FSL-1.1-ALv2 : code consultable, mais usage concurrent interdit ; coûts de modèle", date: "2026-09-18" },
+      { cat: "quality", nom: "Playwright MCP (Microsoft)", url: "https://github.com/microsoft/playwright-mcp", type: "MCP", usage: "Automatisation officielle du navigateur à partir d'instantanés structurés des pages", acces: "Client Apache-2.0 ; conditions du modèle à part", date: "2026-09-18" },
+      { cat: "quality", nom: "PR-Agent", url: "https://github.com/The-PR-Agent/pr-agent", type: "", usage: "Relecteur de pull requests maintenu par la communauté (distinct de Qodo)", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "quality", nom: "Prbl", url: "https://getprbl.com", type: "Web", usage: "Repère les failles typiques du code généré par IA ; GitHub Action qui commente les PR ; réécriture automatique en version payante", acces: "Scan et GitHub Action gratuits ; payant pour la réécriture et les dépôts privés ; Python, JS et TS uniquement", date: "2026-09-23" },
+      { cat: "quality", nom: "Qodo", url: "https://www.qodo.ai", type: "", usage: "Moteur de revue de code IA (anciennement CodiumAI)", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "quality", nom: "Semgrep MCP", url: "https://github.com/semgrep/semgrep/tree/develop/cli/src/semgrep/mcp", type: "MCP", usage: "Analyse de sécurité via le CLI Semgrep", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "quality", nom: "Sentry", url: "https://github.com/getsentry/sentry-mcp", type: "MCP", usage: "Inspecter les erreurs d'une application et diagnostiquer les pannes", acces: "Functional Source License (code consultable) ; vérifier les conditions de la version hébergée", date: "2026-09-18" },
+
+      // Déploiement & exécution
+      { cat: "delivery", nom: "Cloudflare", url: "https://github.com/cloudflare/mcp-server-cloudflare", type: "MCP", usage: "Gérer le déploiement et les ressources cloud", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "delivery", nom: "DropTheHassle", url: "https://dropthehassle.com", type: "CLI / MCP", usage: "L'agent publie un site sur un lien HTTPS gratuit, sans compte ; un humain valide le domaine ou l'e-mail optionnel via un lien de paiement", acces: "Déploiements gratuits ; domaines 12–25 €/an, e-mail dès 5 €/mois ; client MIT ; l'agent ne peut pas payer", date: "2026-10-10" },
+      { cat: "delivery", nom: "E2B", url: "https://github.com/e2b-dev/E2B", type: "", usage: "Bac à sable cloud sécurisé pour agents IA", acces: "Vérifier les tarifs", date: "2026-09-18" },
+      { cat: "delivery", nom: "Publish.my", url: "https://publish.my/", type: "Web", usage: "Publication de sites statiques par un agent", acces: "Offre gratuite ; sites statiques uniquement ; activation par e-mail", date: "2026-09-18" },
+      { cat: "delivery", nom: "XcodeBuildMCP", url: "https://github.com/getsentry/XcodeBuildMCP", type: "MCP", usage: "Compiler, lancer et déboguer des projets Apple", acces: "Vérifier les tarifs", date: "2026-09-18" },
+
+      // Espaces de travail & suivi d'usage
+      { cat: "operations", nom: "Delta (Zed)", url: "https://delta.dev/", type: "Desktop", usage: "Espace multijoueur où l'on lance des fils d'agents et relit leurs changements", acces: "Gratuit pendant la bêta publique ; plans payants prévus ; coûts de modèle à part", date: "2026-09-20" },
+      { cat: "operations", nom: "Duckweed", url: "https://github.com/MusicMaster4/Duckweed", type: "Desktop", usage: "Espace local multiplateforme pour agents, terminaux, diffs Git et sessions", acces: "Code consultable (voir la licence) ; coûts de modèle à part", date: "2026-09-18" },
+      { cat: "operations", nom: "llm.log", url: "https://github.com/lanesket/llm.log", type: "", usage: "Suivre coûts, tokens et requêtes via un proxy local", acces: "MIT ; coûts de modèle à part", date: "2026-09-18" },
+      { cat: "operations", nom: "Parallel Code", url: "https://github.com/johannesjo/parallel-code", type: "Desktop", usage: "Agents en parallèle dans des worktrees Git isolés, puis relecture de leurs changements", acces: "MIT ; coûts de modèle à part", date: "2026-09-18" },
+      { cat: "operations", nom: "Shep", url: "https://github.com/shep-ai/shep", type: "CLI", usage: "Orchestre des agents en parallèle, du commit au brouillon de PR en passant par le suivi de la CI", acces: "Client MIT ; abonnement ou coûts d'API de l'agent à part", date: "2026-09-18" },
+      { cat: "operations", nom: "Superagent", url: "https://github.com/pungme/superagent-desktop", type: "Desktop", usage: "Claude Code ou Codex dans un espace macOS, avec outils navigateur et iOS", acces: "MIT ; macOS sur puce Apple uniquement ; abonnement au modèle à part", date: "2026-09-18" },
+      { cat: "operations", nom: "usage", url: "https://github.com/aqua5230/usage", type: "Desktop", usage: "Voir les quotas des agents depuis la barre de menus macOS ou la zone de notification Windows", acces: "AGPL-3.0 ; coûts de modèle à part", date: "2026-09-18" },
+      { cat: "operations", nom: "Warp Terminal", url: "https://www.warp.dev/terminal", type: "", usage: "Terminal pensé pour les agents", acces: "Téléchargement du terminal ; vérifier le prix de l'usage IA", date: "2026-09-18" },
+
+      // Apprendre : premier projet
+      { cat: "learning", nom: "AI Book : AI Coding", url: "https://aibook.ren/categories/ai-coding", type: "Guide", usage: "Manuel en chinois sur les workflows d'agents, le choix des outils et les pratiques avec Cursor, Codex, Claude Code et Kiro", acces: "Lecture gratuite ; vérifier les conditions de réutilisation", date: "2026-09-18" },
+      { cat: "learning", nom: "Vibe Coding Manual (Roboco)", url: "https://roboco.io/posts/vibe-coding-manual/", type: "Guide", usage: "Modèles de workflow et de règles de projet, en coréen ; exemples datés", acces: "Lecture gratuite ; vérifier les conditions de réutilisation", date: "2026-09-18" },
+      { cat: "learning", nom: "Vibe Coding with Confidence (Mahmoud Zalt)", url: "https://zalt.me/guides/vibe-coding", type: "Guide", usage: "Manuel de développement avec chapitres d'introduction accessibles et contenu avancé payant", acces: "Chapitres de base gratuits ; chapitres avancés payants ; en anglais", date: "2026-09-18" },
+      // Apprendre : workflows pratiques
+      { cat: "learning", nom: "Agentic Coding Recommendations (Armin Ronacher)", url: "https://lucumr.pocoo.org/2025/6/12/agentic-coding/", type: "Guide", usage: "Workflows d'agents et conseils de test ; point de vue d'un praticien en 2025", acces: "Lecture gratuite ; vérifier les conditions de réutilisation", date: "2026-09-18" },
+      { cat: "learning", nom: "Here's how I use LLMs to help me write code (Simon Willison)", url: "https://simonwillison.net/2025/Mar/11/using-llms-for-code/", type: "Guide", usage: "Pratiques de code itératif et d'assurance qualité ; les exemples d'outils de 2025 sont historiques", acces: "Lecture gratuite ; vérifier les conditions de réutilisation", date: "2026-09-18" },
+      { cat: "learning", nom: "Secure Vibe Coding Guide (CSA)", url: "https://cloudsecurityalliance.org/blog/2025/04/09/secure-vibe-coding-guide", type: "Guide", usage: "Checklist de sécurité : secrets, autorisations, validation et revue", acces: "Lecture gratuite ; vérifier les conditions de réutilisation", date: "2026-09-18" },
+      { cat: "learning", nom: "Universal Modder Field Guide : installation Codex (non officiel)", url: "https://universalmodder.dev/guides/codex/", type: "Guide", usage: "Installer la boîte à outils Universal Modder avec Codex et vérifier plugins, skills et CLI um avant de modifier des fichiers de jeu", acces: "Lecture gratuite ; compagnon non officiel de la boîte à outils MIT ; coûts de modèle et de génération de médias à part", date: "2026-10-11" },
+      // Apprendre : concepts & recherche
+      { cat: "learning", nom: "Context Engineering Intro (coleam00)", url: "https://github.com/coleam00/context-engineering-intro", type: "Guide", usage: "Exemples de contexte de projet et d'instructions pour agents de code", acces: "Lecture gratuite ; vérifier les conditions de réutilisation", date: "2026-09-18" },
+      { cat: "learning", nom: "Documentation Model Context Protocol", url: "https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro", type: "Guide", usage: "Introduction officielle à l'architecture MCP et à ses intégrations", acces: "Lecture gratuite ; vérifier les conditions de réutilisation", date: "2026-09-18" },
+      { cat: "learning", nom: "SWE-agent : Agent-Computer Interfaces Enable Automated Software Engineering", url: "https://arxiv.org/abs/2405.15793", type: "Article", usage: "Agent autonome qui corrige de vrais bugs via une interface agent-ordinateur", acces: "Lecture gratuite ; vérifier les conditions de réutilisation", date: "2026-09-18" },
+      { cat: "learning", nom: "SWE-bench : Can Language Models Resolve Real-World GitHub Issues?", url: "https://arxiv.org/abs/2310.06770", type: "Article", usage: "Benchmark de référence pour évaluer les agents de code", acces: "Lecture gratuite ; vérifier les conditions de réutilisation", date: "2026-09-18" },
+      { cat: "learning", nom: "VDLC — Vibe-Driven Development Lifecycle (Roboco)", url: "https://vdlc.roboco.io/", type: "Guide", usage: "Cycle de développement centré sur l'intention et le contexte, en six étapes avec validation humaine au plan, à la revue finale et au déploiement ; en anglais, coréen et japonais", acces: "Lecture gratuite ; vérifier les conditions de réutilisation", date: "2026-10-04" },
+    ];
+
+    const $ = (id) => document.getElementById(id);
+    const dateFr = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+    const normaliser = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+    let categorie = "tout";
+    try { categorie = location.hash.slice(1) || "tout"; } catch {}
+    if (categorie !== "tout" && !CATEGORIES[categorie]) categorie = "tout";
+
+    function afficherFiltres() {
+      const options = [["tout", "Tout", OUTILS.length]].concat(
+        Object.entries(CATEGORIES).map(([cle, nom]) => [cle, nom, OUTILS.filter((o) => o.cat === cle).length])
+      );
+      $("filtres").innerHTML = "";
+      for (const [cle, nom, nb] of options) {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.setAttribute("aria-pressed", String(cle === categorie));
+        b.innerHTML = `${nom}<span class="nb">${nb}</span>`;
+        b.addEventListener("click", () => {
+          categorie = cle;
+          try {
+            history.replaceState(null, "", cle === "tout" ? location.pathname : "#" + cle);
+          } catch {}
+          afficherFiltres();
+          afficherOutils();
+        });
+        $("filtres").appendChild(b);
+      }
+    }
+
+    function afficherOutils() {
+      const q = normaliser($("recherche").value.trim());
+      const liste = OUTILS.filter((o) =>
+        (categorie === "tout" || o.cat === categorie) &&
+        (!q || normaliser([o.nom, o.type, o.usage, o.acces, CATEGORIES[o.cat]].join(" ")).includes(q))
+      );
+      const grille = $("grille");
+      grille.innerHTML = "";
+      for (const o of liste) {
+        const carte = document.createElement("article");
+        carte.className = "carte";
+        carte.innerHTML = `
+          <h2><a href="${o.url}" target="_blank" rel="noopener"></a></h2>
+          <div class="tags">
+            <span class="tag cat"></span>
+            ${o.type ? '<span class="tag type"></span>' : ""}
+          </div>
+          <p class="usage"></p>
+          <p class="acces"><strong>Accès :</strong> <span></span></p>
+          <div class="date">Vérifié le <time datetime="${o.date}">${dateFr(o.date)}</time></div>`;
+        carte.querySelector("h2 a").textContent = o.nom;
+        carte.querySelector(".tag.cat").textContent = CATEGORIES[o.cat];
+        if (o.type) carte.querySelector(".tag.type").textContent = o.type;
+        carte.querySelector(".usage").textContent = o.usage;
+        carte.querySelector(".acces span").textContent = o.acces;
+        grille.appendChild(carte);
+      }
+      if (!liste.length) grille.innerHTML = '<p class="vide">Aucun outil ne correspond à ce filtre.</p>';
+      $("compteur").textContent = `${liste.length} résultat${liste.length > 1 ? "s" : ""}`;
+    }
+
+    $("recherche").addEventListener("input", afficherOutils);
+    afficherFiltres();
+    afficherOutils();
+  </script>
+</body>
+</html>
