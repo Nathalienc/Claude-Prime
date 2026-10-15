@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Outils vibe coding</title>
+  <meta name="claude:viewport-fit-sides" content="cover">
   <style>
     :root {
       --bg: #f6f7f9;
@@ -17,7 +18,7 @@
       --radius: 10px;
     }
     @media (prefers-color-scheme: dark) {
-      :root {
+      :root:not([data-theme="light"]) {
         --bg: #14171d;
         --surface: #1d2129;
         --text: #e6e9ef;
@@ -26,7 +27,19 @@
         --accent: #748ffc;
         --accent-text: #10131a;
         --chip: #262b35;
+        color-scheme: dark;
       }
+    }
+    :root[data-theme="dark"] {
+      --bg: #14171d;
+      --surface: #1d2129;
+      --text: #e6e9ef;
+      --muted: #9aa3b5;
+      --border: #2e3440;
+      --accent: #748ffc;
+      --accent-text: #10131a;
+      --chip: #262b35;
+      color-scheme: dark;
     }
     * { box-sizing: border-box; }
     body {
@@ -36,18 +49,23 @@
       color: var(--text);
       line-height: 1.5;
     }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
-    header { padding: 40px 0 8px; }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+    header { padding-block: 40px 8px; }
     header h1 { margin: 0 0 4px; font-size: 1.8rem; }
     header p { margin: 0; color: var(--muted); max-width: 70ch; }
     a { color: var(--accent); }
 
     .controls {
       position: sticky;
-      top: 0;
+      top: env(safe-area-inset-top, 0px);
       z-index: 1;
       background: var(--bg);
-      padding: 16px 0 12px;
+      padding-block: 16px 12px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -120,7 +138,7 @@
     }
     .date { margin-top: auto; font-size: 0.8rem; color: var(--muted); }
     .vide { color: var(--muted); padding: 24px 0; }
-    footer { color: var(--muted); font-size: 0.85rem; padding: 0 0 40px; }
+    footer { color: var(--muted); font-size: 0.85rem; padding-block: 0 40px; }
   </style>
 </head>
 <body>
@@ -243,7 +261,7 @@
     const normaliser = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
     let categorie = "tout";
-    try { categorie = new URLSearchParams(location.search).get("cat") || "tout"; } catch {}
+    try { categorie = location.hash.slice(1) || "tout"; } catch {}
     if (categorie !== "tout" && !CATEGORIES[categorie]) categorie = "tout";
 
     function afficherFiltres() {
@@ -259,9 +277,7 @@
         b.addEventListener("click", () => {
           categorie = cle;
           try {
-            const url = new URL(location.href);
-            cle === "tout" ? url.searchParams.delete("cat") : url.searchParams.set("cat", cle);
-            history.replaceState(null, "", url);
+            history.replaceState(null, "", cle === "tout" ? location.pathname : "#" + cle);
           } catch {}
           afficherFiltres();
           afficherOutils();
