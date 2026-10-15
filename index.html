@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Claude-Prime</title>
-  <meta name="description" content="Claude-Prime — projet GitHub">
+  <meta name="description" content="Claude-Prime — page d'accueil du projet">
   <style>
     :root {
       --bg: #f7f7f5;
@@ -12,6 +12,7 @@
       --text: #1f1f1d;
       --muted: #6b6b66;
       --accent: #c96442;
+      --accent-soft: #f6e6df;
       --border: #e4e4df;
     }
     @media (prefers-color-scheme: dark) {
@@ -21,6 +22,7 @@
         --text: #ececea;
         --muted: #a3a39d;
         --accent: #e08a6a;
+        --accent-soft: #3a2a23;
         --border: #34342f;
       }
     }
@@ -44,32 +46,61 @@
     header { padding-top: 24px; font-weight: 600; }
     header span { color: var(--accent); }
     main { flex: 1; padding-top: 72px; padding-bottom: 48px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
     h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.1; margin: 0 0 16px; }
     .lead { color: var(--muted); font-size: 1.125rem; margin: 0 0 32px; }
+    ol {
+      margin: 0 0 40px;
+      padding: 0;
+      list-style: none;
+      counter-reset: step;
+    }
+    li {
+      counter-increment: step;
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+    }
+    li:last-child { border-bottom: 1px solid var(--border); }
+    li::before {
+      content: counter(step);
+      flex: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
     .button {
       display: inline-block;
       padding: 10px 18px;
       border-radius: 8px;
-      background: var(--accent);
-      color: #fff;
       text-decoration: none;
       font-weight: 500;
+      border: 1px solid var(--accent);
     }
+    .button.primary { background: var(--accent); color: #fff; }
+    .button.secondary { color: var(--accent); }
     .button:hover { opacity: 0.9; }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-top: 56px;
-    }
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-    }
-    .card h2 { font-size: 1rem; margin: 0 0 8px; }
-    .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
     footer {
       padding-top: 24px;
       padding-bottom: 24px;
@@ -83,29 +114,28 @@
   <header><span>◆</span> Claude-Prime</header>
 
   <main>
-    <h1>Bienvenue sur Claude-Prime</h1>
-    <p class="lead">Projet GitHub. Cette page sert de point de départ pour présenter le projet.</p>
-    <a class="button" href="https://github.com/nathalienc/claude-prime">Voir sur GitHub</a>
+    <div class="badge" aria-hidden="true">👋</div>
+    <h1 id="greeting">Bienvenue sur Claude-Prime</h1>
+    <p class="lead">Nous sommes ravis de vous accueillir sur Claude-Prime. Voici comment bien commencer :</p>
 
-    <section class="cards">
-      <div class="card">
-        <h2>À propos</h2>
-        <p>Décrivez ici l'objectif du projet.</p>
-      </div>
-      <div class="card">
-        <h2>Démarrer</h2>
-        <p>Ajoutez les étapes d'installation et d'utilisation.</p>
-      </div>
-      <div class="card">
-        <h2>Contribuer</h2>
-        <p>Expliquez comment proposer des améliorations.</p>
-      </div>
-    </section>
+    <ol>
+      <li>Découvrez le projet et ses objectifs.</li>
+      <li>Consultez le dépôt GitHub pour explorer le code.</li>
+      <li>Partagez vos idées et contribuez au projet.</li>
+    </ol>
+
+    <div class="actions">
+      <a class="button primary" href="outils.html">Outils vibe coding</a>
+      <a class="button secondary" href="https://github.com/nathalienc/claude-prime">Voir sur GitHub</a>
+    </div>
   </main>
 
   <footer>© <span id="year">2026</span> Claude-Prime</footer>
 
   <script>
+    var h = new Date().getHours();
+    var salut = h >= 5 && h < 18 ? "Bonjour" : "Bonsoir";
+    document.getElementById("greeting").textContent = salut + ", bienvenue sur Claude-Prime !";
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
