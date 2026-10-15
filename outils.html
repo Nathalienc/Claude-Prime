@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outils</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --text: #1d2330;
+      --muted: #5c6577;
+      --border: #dde1e8;
+      --accent: #3b5bdb;
+      --accent-text: #ffffff;
+      --radius: 10px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #14171d;
+        --surface: #1d2129;
+        --text: #e6e9ef;
+        --muted: #9aa3b5;
+        --border: #2e3440;
+        --accent: #748ffc;
+        --accent-text: #10131a;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header, main { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+    header { padding-top: 40px; padding-bottom: 8px; }
+    header h1 { margin: 0 0 4px; font-size: 1.8rem; }
+    header p { margin: 0; color: var(--muted); }
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      padding-top: 24px;
+      padding-bottom: 48px;
+    }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    h2 { margin: 0; font-size: 1.1rem; }
+    label { font-size: 0.9rem; color: var(--muted); }
+    input, select, textarea, button {
+      font: inherit;
+      color: inherit;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    button {
+      padding: 8px 14px;
+      background: var(--accent);
+      color: var(--accent-text);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .row > * { flex: 1; min-width: 0; }
+    .row > button { flex: 0 0 auto; }
+    .result {
+      font-family: ui-monospace, "SF Mono", Consolas, monospace;
+      font-size: 1.05rem;
+      padding: 10px;
+      background: var(--bg);
+      border-radius: 6px;
+      word-break: break-all;
+      min-height: 2.6em;
+    }
+    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; font-size: 0.95rem; }
+    .stats strong { font-variant-numeric: tabular-nums; }
+    .timer { font-size: 2.4rem; text-align: center; font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Outils</h1>
+    <p>Petits outils pratiques, utilisables directement dans le navigateur.</p>
+  </header>
+
+  <main>
+    <!-- Compteur de mots -->
+    <section>
+      <h2>Compteur de texte</h2>
+      <textarea id="texte" placeholder="Collez ou tapez votre texte ici…"></textarea>
+      <div class="stats">
+        <span>Mots : <strong id="nbMots">0</strong></span>
+        <span>Caractères : <strong id="nbCar">0</strong></span>
+        <span>Sans espaces : <strong id="nbCarSans">0</strong></span>
+        <span>Lignes : <strong id="nbLignes">0</strong></span>
+      </div>
+    </section>
+
+    <!-- Générateur de mot de passe -->
+    <section>
+      <h2>Générateur de mot de passe</h2>
+      <label for="longueur">Longueur : <span id="longueurVal">16</span></label>
+      <input type="range" id="longueur" min="6" max="64" value="16">
+      <div class="row">
+        <label><input type="checkbox" id="optMaj" checked style="width:auto"> Majuscules</label>
+        <label><input type="checkbox" id="optChiffres" checked style="width:auto"> Chiffres</label>
+        <label><input type="checkbox" id="optSymboles" checked style="width:auto"> Symboles</label>
+      </div>
+      <div class="result" id="motDePasse"></div>
+      <div class="row">
+        <button id="genererMdp">Générer</button>
+        <button class="secondary" id="copierMdp">Copier</button>
+      </div>
+    </section>
+
+    <!-- Convertisseur d'unités -->
+    <section>
+      <h2>Convertisseur d'unités</h2>
+      <select id="categorie">
+        <option value="longueur">Longueur</option>
+        <option value="masse">Masse</option>
+        <option value="temperature">Température</option>
+      </select>
+      <div class="row">
+        <input type="number" id="valeurDe" value="1">
+        <select id="uniteDe"></select>
+      </div>
+      <div class="row">
+        <div class="result" id="valeurVers"></div>
+        <select id="uniteVers"></select>
+      </div>
+    </section>
+
+    <!-- Calculateur de pourcentage -->
+    <section>
+      <h2>Pourcentages</h2>
+      <label>Combien font X % de Y ?</label>
+      <div class="row">
+        <input type="number" id="pctX" placeholder="X %">
+        <input type="number" id="pctY" placeholder="Y">
+      </div>
+      <div class="result" id="pctRes1"></div>
+      <label>Variation de A à B</label>
+      <div class="row">
+        <input type="number" id="varA" placeholder="A">
+        <input type="number" id="varB" placeholder="B">
+      </div>
+      <div class="result" id="pctRes2"></div>
+    </section>
+
+    <!-- Minuteur -->
+    <section>
+      <h2>Minuteur</h2>
+      <div class="row">
+        <input type="number" id="minutes" min="0" value="5" aria-label="Minutes">
+        <span style="flex:0">min</span>
+        <input type="number" id="secondes" min="0" max="59" value="0" aria-label="Secondes">
+        <span style="flex:0">s</span>
+      </div>
+      <div class="timer" id="affichageMinuteur">05:00</div>
+      <div class="row">
+        <button id="demarrer">Démarrer</button>
+        <button class="secondary" id="reinitialiser">Réinitialiser</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const fmt = (n) => Number.isFinite(n)
+      ? n.toLocaleString("fr-FR", { maximumFractionDigits: 6 })
+      : "—";
+
+    // Compteur de texte
+    $("texte").addEventListener("input", (e) => {
+      const t = e.target.value;
+      $("nbMots").textContent = (t.trim().match(/\S+/g) || []).length;
+      $("nbCar").textContent = t.length;
+      $("nbCarSans").textContent = t.replace(/\s/g, "").length;
+      $("nbLignes").textContent = t ? t.split("\n").length : 0;
+    });
+
+    // Générateur de mot de passe
+    function genererMotDePasse() {
+      let jeu = "abcdefghijklmnopqrstuvwxyz";
+      if ($("optMaj").checked) jeu += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      if ($("optChiffres").checked) jeu += "0123456789";
+      if ($("optSymboles").checked) jeu += "!@#$%^&*()-_=+[]{};:,.?";
+      const n = Number($("longueur").value);
+      const aleas = crypto.getRandomValues(new Uint32Array(n));
+      $("motDePasse").textContent = Array.from(aleas, (v) => jeu[v % jeu.length]).join("");
+    }
+    $("longueur").addEventListener("input", (e) => {
+      $("longueurVal").textContent = e.target.value;
+      genererMotDePasse();
+    });
+    ["optMaj", "optChiffres", "optSymboles"].forEach((id) =>
+      $(id).addEventListener("change", genererMotDePasse));
+    $("genererMdp").addEventListener("click", genererMotDePasse);
+    $("copierMdp").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText($("motDePasse").textContent);
+        $("copierMdp").textContent = "Copié !";
+        setTimeout(() => ($("copierMdp").textContent = "Copier"), 1500);
+      } catch {}
+    });
+    genererMotDePasse();
+
+    // Convertisseur d'unités (facteurs vers l'unité de base)
+    const unites = {
+      longueur: { "mm": 0.001, "cm": 0.01, "m": 1, "km": 1000, "pouce": 0.0254, "pied": 0.3048, "mile": 1609.344 },
+      masse: { "mg": 0.001, "g": 1, "kg": 1000, "tonne": 1e6, "once": 28.349523125, "livre": 453.59237 },
+      temperature: { "°C": null, "°F": null, "K": null },
+    };
+    const versCelsius = { "°C": (v) => v, "°F": (v) => (v - 32) * 5 / 9, "K": (v) => v - 273.15 };
+    const depuisCelsius = { "°C": (v) => v, "°F": (v) => v * 9 / 5 + 32, "K": (v) => v + 273.15 };
+
+    function remplirUnites() {
+      const liste = Object.keys(unites[$("categorie").value]);
+      for (const [sel, idx] of [["uniteDe", 0], ["uniteVers", 1]]) {
+        $(sel).innerHTML = liste.map((u) => `<option>${u}</option>`).join("");
+        $(sel).selectedIndex = Math.min(idx + (liste.length > 3 ? 2 : 0), liste.length - 1);
+      }
+      convertir();
+    }
+    function convertir() {
+      const cat = $("categorie").value;
+      const v = parseFloat($("valeurDe").value);
+      const de = $("uniteDe").value, vers = $("uniteVers").value;
+      const r = cat === "temperature"
+        ? depuisCelsius[vers](versCelsius[de](v))
+        : v * unites[cat][de] / unites[cat][vers];
+      $("valeurVers").textContent = fmt(r);
+    }
+    $("categorie").addEventListener("change", remplirUnites);
+    ["valeurDe", "uniteDe", "uniteVers"].forEach((id) =>
+      $(id).addEventListener("input", convertir));
+    remplirUnites();
+
+    // Pourcentages
+    function calculerPourcentages() {
+      const x = parseFloat($("pctX").value), y = parseFloat($("pctY").value);
+      $("pctRes1").textContent = Number.isFinite(x) && Number.isFinite(y) ? fmt(x * y / 100) : "";
+      const a = parseFloat($("varA").value), b = parseFloat($("varB").value);
+      if (Number.isFinite(a) && Number.isFinite(b) && a !== 0) {
+        const p = (b - a) / Math.abs(a) * 100;
+        $("pctRes2").textContent = (p > 0 ? "+" : "") + fmt(p) + " %";
+      } else {
+        $("pctRes2").textContent = "";
+      }
+    }
+    ["pctX", "pctY", "varA", "varB"].forEach((id) =>
+      $(id).addEventListener("input", calculerPourcentages));
+
+    // Minuteur
+    let restant = 300, intervalle = null;
+    const afficher = () => {
+      const m = Math.floor(restant / 60), s = restant % 60;
+      $("affichageMinuteur").textContent = `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    };
+    const lireDuree = () => {
+      restant = Math.max(0, (parseInt($("minutes").value) || 0) * 60 + (parseInt($("secondes").value) || 0));
+      afficher();
+    };
+    const arreter = () => {
+      clearInterval(intervalle);
+      intervalle = null;
+      $("demarrer").textContent = "Démarrer";
+    };
+    $("demarrer").addEventListener("click", () => {
+      if (intervalle) return arreter();
+      if (restant <= 0) lireDuree();
+      if (restant <= 0) return;
+      $("demarrer").textContent = "Pause";
+      intervalle = setInterval(() => {
+        restant--;
+        afficher();
+        if (restant <= 0) {
+          arreter();
+          $("affichageMinuteur").textContent = "Terminé !";
+        }
+      }, 1000);
+    });
+    $("reinitialiser").addEventListener("click", () => { arreter(); lireDuree(); });
+    ["minutes", "secondes"].forEach((id) =>
+      $(id).addEventListener("input", () => { if (!intervalle) lireDuree(); }));
+  </script>
+</body>
+</html>
