@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bienvenue — Claude-Prime</title>
+  <meta name="description" content="Page d'accueil de Claude-Prime">
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --surface: #ffffff;
+      --text: #1f1f1d;
+      --muted: #6b6b66;
+      --accent: #c96442;
+      --accent-soft: #f6e6df;
+      --border: #e4e4df;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a18;
+        --surface: #242422;
+        --text: #ececea;
+        --muted: #a3a39d;
+        --accent: #e08a6a;
+        --accent-soft: #3a2a23;
+        --border: #34342f;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+    }
+    .welcome {
+      width: 100%;
+      max-width: 560px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    h1 { font-size: clamp(1.75rem, 5vw, 2.25rem); line-height: 1.2; margin: 0 0 12px; }
+    .greeting { color: var(--muted); margin: 0 0 28px; }
+    ol {
+      text-align: left;
+      margin: 0 0 32px;
+      padding: 0;
+      list-style: none;
+      counter-reset: step;
+    }
+    li {
+      counter-increment: step;
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+    }
+    li:last-child { border-bottom: 1px solid var(--border); }
+    li::before {
+      content: counter(step);
+      flex: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .button {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      border: 1px solid var(--accent);
+    }
+    .button.primary { background: var(--accent); color: #fff; }
+    .button.secondary { color: var(--accent); }
+    .button:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <main class="welcome">
+    <div class="badge" aria-hidden="true">👋</div>
+    <h1 id="greeting">Bienvenue !</h1>
+    <p class="greeting">Nous sommes ravis de vous accueillir sur Claude-Prime. Voici comment bien commencer :</p>
+
+    <ol>
+      <li>Découvrez le projet et ses objectifs.</li>
+      <li>Consultez le dépôt GitHub pour explorer le code.</li>
+      <li>Partagez vos idées et contribuez au projet.</li>
+    </ol>
+
+    <div class="actions">
+      <a class="button primary" href="index.html">Commencer</a>
+      <a class="button secondary" href="outils.html">Outils vibe coding</a>
+      <a class="button secondary" href="https://github.com/nathalienc/claude-prime">Voir sur GitHub</a>
+    </div>
+  </main>
+
+  <script>
+    var h = new Date().getHours();
+    var salut = h >= 5 && h < 18 ? "Bonjour" : "Bonsoir";
+    document.getElementById("greeting").textContent = salut + ", bienvenue !";
+  </script>
+</body>
+</html>
