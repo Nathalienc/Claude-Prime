@@ -108,6 +108,14 @@
       padding-bottom: 32px;
     }
     .carte {
+      /* Cartes toujours blanches, y compris en mode sombre : couleurs claires forcées */
+      --surface: #ffffff;
+      --text: #1d2330;
+      --muted: #5c6577;
+      --border: #dde1e8;
+      --accent: #3b5bdb;
+      --chip: #eef1f6;
+      color: var(--text);
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
