@@ -65,7 +65,57 @@
       font-size: 1.5rem;
       margin-bottom: 20px;
     }
-    h1 { font-size: clamp(1.75rem, 5vw, 2.25rem); line-height: 1.2; margin: 0 0 12px; color: var(--accent); }
+    h1 {
+      font-size: clamp(1.75rem, 5vw, 2.25rem);
+      line-height: 1.2;
+      margin: 0 0 12px;
+      color: var(--text);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      column-gap: 0.3em;
+    }
+
+    /* Mots qui défilent, d'après « From Uiverse.io by kennyotsu » */
+    .words {
+      /* couleur du fondu en haut et en bas : celle de la carte */
+      --bg-color: var(--surface);
+      overflow: hidden;
+      position: relative;
+      height: 1.2em;
+    }
+    .words::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        var(--bg-color) 10%,
+        transparent 30%,
+        transparent 70%,
+        var(--bg-color) 90%
+      );
+      z-index: 20;
+    }
+    .word {
+      display: block;
+      height: 100%;
+      text-align: left;
+      color: var(--accent);
+      animation: defilement 4s infinite;
+    }
+    @keyframes defilement {
+      10% { transform: translateY(-102%); }
+      25% { transform: translateY(-100%); }
+      35% { transform: translateY(-202%); }
+      50% { transform: translateY(-200%); }
+      60% { transform: translateY(-302%); }
+      75% { transform: translateY(-300%); }
+      85% { transform: translateY(-402%); }
+      100% { transform: translateY(-400%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .word { animation: none; }
+    }
     .greeting { color: var(--muted); margin: 0 0 28px; }
     ol {
       text-align: left;
@@ -114,7 +164,16 @@
 <body>
   <main class="welcome">
     <div class="badge" aria-hidden="true">👋</div>
-    <h1 id="greeting">Bienvenue !</h1>
+    <h1 id="greeting" aria-label="Bonjour, bienvenue !">
+      <span id="salut">Bonjour,</span>
+      <span class="words" aria-hidden="true">
+        <span class="word">bienvenue&nbsp;!</span>
+        <span class="word">welcome!</span>
+        <span class="word">bienvenidos!</span>
+        <span class="word">benvenuti!</span>
+        <span class="word">bienvenue&nbsp;!</span>
+      </span>
+    </h1>
     <p class="greeting">Nous sommes ravis de vous accueillir sur Claude-Prime. Voici comment bien commencer :</p>
 
     <ol>
@@ -133,7 +192,8 @@
   <script>
     var h = new Date().getHours();
     var salut = h >= 5 && h < 18 ? "Bonjour" : "Bonsoir";
-    document.getElementById("greeting").textContent = salut + ", bienvenue !";
+    document.getElementById("salut").textContent = salut + ",";
+    document.getElementById("greeting").setAttribute("aria-label", salut + ", bienvenue !");
   </script>
 </body>
 </html>
