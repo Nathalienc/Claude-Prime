@@ -6,25 +6,27 @@
   <title>Claude-Prime</title>
   <meta name="description" content="Page d'accueil de Claude-Prime">
   <style>
+    /* Mêmes couleurs que outils.html */
     :root {
-      --bg: #f7f7f5;
+      --bg: #f6f7f9;
       --surface: #ffffff;
-      --text: #1f1f1d;
-      --muted: #6b6b66;
-      --accent: #c96442;
-      --accent-soft: #f6e6df;
-      --border: #e4e4df;
+      --text: #1d2330;
+      --muted: #5c6577;
+      --accent: #3b5bdb;
+      --accent-soft: #e7ecfd;
+      --border: #dde1e8;
     }
     @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #1a1a18;
-        --surface: #242422;
-        --text: #ececea;
-        --muted: #a3a39d;
-        --accent: #e08a6a;
-        --accent-soft: #3a2a23;
-        --border: #34342f;
+      :root:not([data-theme="light"]) {
+        --bg: #14171d;
+        --text: #e6e9ef;
+        color-scheme: dark;
       }
+    }
+    :root[data-theme="dark"] {
+      --bg: #14171d;
+      --text: #e6e9ef;
+      color-scheme: dark;
     }
     * { box-sizing: border-box; }
     body {
@@ -40,6 +42,9 @@
       line-height: 1.6;
     }
     .welcome {
+      /* Carte toujours blanche, y compris en mode sombre, comme les cartes de outils.html */
+      --text: #1d2330;
+      color: var(--text);
       width: 100%;
       max-width: 560px;
       background: var(--surface);
