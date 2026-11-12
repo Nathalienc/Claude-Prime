@@ -99,3 +99,4 @@
 .pied ul { list-style: none; gap: 8px 20px; }
 .pied a { color: var(--c-link); }
 .pied a[aria-current="page"] { font-weight: 600; text-decoration: none; }
+.pied .copyright { max-width: 70rem; margin: 0 auto; padding: 0 16px 14px; }
