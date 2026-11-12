@@ -8,26 +8,36 @@
   <link rel="stylesheet" href="site.css">
 </head>
 <body class="page">
-  <a class="evitement" href="#contenu">Aller au contenu</a>
-  <header class="entete">
-    <a href="index.html">Claude-Prime, accueil</a>
+  <header class="site-entete">
+    <a class="evitement" href="#contenu">Aller au contenu</a>
+    <div class="barre">
+      <a class="nom" href="index.html">Claude-Prime</a>
+      <nav aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="outils.html">Outils de vibe coding</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
   <main id="contenu" tabindex="-1">
     <h1>Info site</h1>
-    <h2>À propos</h2>
-    <p>Claude-Prime est un site HTML statique publié sur Cloudflare Pages.
-      Son code source est disponible sur <a href="https://github.com/nathalienc/claude-prime">le dépôt GitHub Claude-Prime</a>.</p>
-    <h2>Technologies utilisées</h2>
-    <ul>
-      <li>HTML et CSS, sans framework ni police téléchargée ;</li>
-      <li>un peu de JavaScript, exécuté dans le navigateur : salutation selon l'heure sur l'accueil, filtre et recherche sur la page des outils.</li>
-    </ul>
-    <p>Les pages ne chargent aucune ressource depuis un autre domaine.</p>
+    <h2>Technologies</h2>
+    <p>Pages HTML avec une feuille de style partagée. Un peu de JavaScript s'exécute dans le navigateur :
+      la salutation selon l'heure sur l'accueil, le filtre et la recherche sur la page des outils.</p>
+    <h2>Polices</h2>
+    <p>Le site utilise les polices déjà installées sur votre appareil : aucune police n'est téléchargée.</p>
+    <h2>Ressources externes</h2>
+    <p>Aucune. Les pages ne chargent aucun fichier depuis un autre site.</p>
+    <h2>Hébergement</h2>
+    <p>Cloudflare Pages. Les détails sont dans les <a href="mentions-legales.html">mentions légales</a>.</p>
+    <h2>Code source</h2>
+    <p>Disponible sur <a href="https://github.com/nathalienc/claude-prime">le dépôt GitHub Claude-Prime</a>.</p>
     <p>Dernière mise à jour du site : <span class="a-completer">[À COMPLÉTER : date]</span>.</p>
     <h2 id="plan">Plan du site</h2>
     <ul>
       <li><a href="index.html">Accueil</a></li>
-      <li><a href="outils.html">Outils vibe coding</a></li>
+      <li><a href="outils.html">Outils de vibe coding</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="aide.html">Aide</a></li>
       <li><a href="info-site.html">Info site</a></li>

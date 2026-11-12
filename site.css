@@ -1,7 +1,8 @@
-/* Styles partagés : pied de page (toutes les pages) et gabarit des pages de contenu.
-   Variables limitées à .page et .pied pour ne pas modifier index.html et outils.html. */
+/* Styles partagés : en-tête et pied de page (toutes les pages) et gabarit des pages de contenu.
+   Variables limitées à .page, .site-entete et .pied pour ne pas modifier index.html et outils.html. */
 
 .page,
+.site-entete,
 .pied {
   --c-bg: #f6f7f9;
   --c-surface: #ffffff;
@@ -12,6 +13,7 @@
 }
 @media (prefers-color-scheme: dark) {
   .page,
+  .site-entete,
   .pied {
     --c-bg: #14171d;
     --c-surface: #1d2129;
@@ -33,6 +35,7 @@
 }
 .page a { color: var(--c-link); }
 .page a:focus-visible,
+.site-entete a:focus-visible,
 .pied a:focus-visible,
 .page main:focus-visible {
   outline: 3px solid currentColor;
@@ -49,19 +52,39 @@
   z-index: 10;
 }
 .evitement:focus { top: 8px; }
-.entete,
 .page main {
   max-width: 46rem;
   margin: 0 auto;
   padding: 0 16px;
 }
-.entete { padding-block: 20px; }
-.entete a { font-weight: 600; text-decoration: none; }
-.entete a:hover { text-decoration: underline; }
-.page main { padding-block: 8px 40px; }
+.page main { padding-block: 32px 40px; }
 .page h1 { font-size: clamp(1.6rem, 4vw, 2rem); line-height: 1.2; margin: 0 0 16px; }
 .page h2 { font-size: 1.25rem; margin: 32px 0 8px; }
 .a-completer { background: #fff3bf; color: #1d2330; padding: 0 4px; border-radius: 4px; }
+
+/* En-tête commun */
+.site-entete {
+  width: 100%;
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-border);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+}
+.site-entete .barre,
+.pied ul {
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.site-entete .barre { justify-content: space-between; gap: 8px 24px; }
+.site-entete .nom { color: var(--c-text); font-weight: 700; font-size: 1.1rem; text-decoration: none; }
+.site-entete .nom:hover { text-decoration: underline; }
+.site-entete ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.site-entete a { color: var(--c-link); }
+.site-entete a[aria-current="page"] { font-weight: 600; text-decoration: none; }
 
 /* Pied de page commun */
 .pied {
@@ -73,14 +96,6 @@
   font-size: 0.9rem;
   line-height: 1.5;
 }
-.pied ul {
-  max-width: 46rem;
-  margin: 0 auto;
-  padding: 16px;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-}
+.pied ul { list-style: none; gap: 8px 20px; }
 .pied a { color: var(--c-link); }
 .pied a[aria-current="page"] { font-weight: 600; text-decoration: none; }

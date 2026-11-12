@@ -56,9 +56,9 @@
       padding-left: max(16px, env(safe-area-inset-left, 0px));
       padding-right: max(16px, env(safe-area-inset-right, 0px));
     }
-    header { padding-block: 40px 8px; }
-    header h1 { margin: 0 0 4px; font-size: 1.8rem; }
-    header p { margin: 0; color: var(--muted); max-width: 70ch; }
+    .intro { padding-block: 40px 8px; }
+    .intro h1 { margin: 0 0 4px; font-size: 1.8rem; }
+    .intro p { margin: 0; color: var(--muted); max-width: 70ch; }
     a { color: var(--accent); }
 
     .controls {
@@ -151,13 +151,26 @@
   </style>
 </head>
 <body>
-  <header class="wrap">
+  <header class="site-entete">
+    <a class="evitement" href="#contenu">Aller au contenu</a>
+    <div class="barre">
+      <a class="nom" href="index.html">Claude-Prime</a>
+      <nav aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="outils.html" aria-current="page">Outils de vibe coding</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="contenu" tabindex="-1">
+  <div class="wrap intro">
     <h1>OUTILS VIBE CODING</h1>
     <p>
       Outils et guides pour développer avec l'IA, classés par tâche. Pour chaque
       outil : à quoi il sert, les conditions d'accès et la date de vérification.
     </p>
-  </header>
+  </div>
 
   <div class="controls wrap">
     <div class="filtres" id="filtres" role="group" aria-label="Filtrer par catégorie"></div>
@@ -167,8 +180,9 @@
     </div>
   </div>
 
-  <main class="wrap">
+  <div class="wrap">
     <div class="grille" id="grille"></div>
+  </div>
   </main>
 
   <p class="wrap source">

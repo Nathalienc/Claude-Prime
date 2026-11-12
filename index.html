@@ -164,11 +164,24 @@
     .button:hover { opacity: 0.9; }
     /* Carte centrée, pied de page en bas de l'écran et sur toute la largeur */
     .welcome { margin-top: auto; }
+    body > .site-entete { margin: -32px -16px 0; width: calc(100% + 32px); }
     body > .pied { margin: auto -16px 0; width: calc(100% + 32px); }
   </style>
 </head>
 <body>
-  <main class="welcome">
+  <header class="site-entete">
+    <a class="evitement" href="#contenu">Aller au contenu</a>
+    <div class="barre">
+      <a class="nom" href="index.html">Claude-Prime</a>
+      <nav aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html" aria-current="page">Accueil</a></li>
+          <li><a href="outils.html">Outils de vibe coding</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="welcome" id="contenu" tabindex="-1">
     <div class="badge" aria-hidden="true">👋</div>
     <h1 id="greeting" aria-label="Bonjour, bienvenue !">
       <span id="salut">Bonjour,</span>

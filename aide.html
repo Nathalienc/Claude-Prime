@@ -4,20 +4,34 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Aide – Claude-Prime</title>
-  <meta name="description" content="Comment utiliser et parcourir le site Claude-Prime.">
+  <meta name="description" content="Comment parcourir et utiliser le site Claude-Prime.">
   <link rel="stylesheet" href="site.css">
 </head>
 <body class="page">
-  <a class="evitement" href="#contenu">Aller au contenu</a>
-  <header class="entete">
-    <a href="index.html">Claude-Prime, accueil</a>
+  <header class="site-entete">
+    <a class="evitement" href="#contenu">Aller au contenu</a>
+    <div class="barre">
+      <a class="nom" href="index.html">Claude-Prime</a>
+      <nav aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="outils.html">Outils de vibe coding</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
   <main id="contenu" tabindex="-1">
     <h1>Aide</h1>
-    <h2>Se déplacer dans le site</h2>
-    <p>Le site comprend une page d'accueil, une page « Outils vibe coding » et des pages d'information.
-      Elles sont toutes accessibles depuis le pied de page et depuis le <a href="info-site.html#plan">plan du site</a>.</p>
-    <h2>Utiliser la page « Outils vibe coding »</h2>
+    <h2>Organisation des pages</h2>
+    <p>Chaque page suit le même ordre :</p>
+    <ol>
+      <li>un lien « Aller au contenu », visible à la première pression sur la touche Tab ;</li>
+      <li>l'en-tête, avec le nom du site et le menu principal (Accueil, Outils de vibe coding) ;</li>
+      <li>le contenu de la page ;</li>
+      <li>le pied de page, avec les liens Contact, Aide, Info site, Accessibilité, Site de shopping, Cookies / Données personnelles et Mentions légales.</li>
+    </ol>
+    <p>La liste de toutes les pages est dans le <a href="info-site.html#plan">plan du site</a>.</p>
+    <h2>Utiliser la page « Outils de vibe coding »</h2>
     <ul>
       <li>Les boutons de catégorie affichent uniquement les outils de la catégorie choisie.</li>
       <li>Le champ de recherche filtre les outils par nom, usage ou conditions d'accès. Le nombre de résultats s'affiche à côté.</li>
@@ -25,14 +39,15 @@
     </ul>
     <h2>Naviguer au clavier</h2>
     <ul>
-      <li>La touche Tab passe au lien ou au champ suivant, Maj + Tab revient au précédent.</li>
-      <li>Sur les pages d'information, le premier lien « Aller au contenu » permet de passer directement au texte principal.</li>
+      <li>Tab passe au lien, bouton ou champ suivant ; Maj + Tab revient au précédent.</li>
+      <li>Entrée ouvre le lien sélectionné.</li>
+      <li>L'élément sélectionné est entouré d'un contour.</li>
     </ul>
-    <h2>Adapter l'affichage</h2>
-    <ul>
-      <li>Agrandissez le texte avec le zoom du navigateur (Ctrl + « + », ou Cmd + « + » sur Mac).</li>
-      <li>Le thème clair ou sombre suit le réglage de votre système.</li>
-    </ul>
+    <h2>Agrandir le texte</h2>
+    <p>Utilisez le zoom du navigateur : Ctrl et + pour agrandir, Ctrl et 0 pour revenir à la taille normale
+      (Cmd au lieu de Ctrl sur Mac).</p>
+    <h2>Affichage clair ou sombre</h2>
+    <p>Le site suit le réglage clair ou sombre de votre appareil.</p>
   </main>
   <footer class="pied">
     <nav aria-label="Pied de page">
