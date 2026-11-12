@@ -1,0 +1,86 @@
+/* Styles partagés : pied de page (toutes les pages) et gabarit des pages de contenu.
+   Variables limitées à .page et .pied pour ne pas modifier index.html et outils.html. */
+
+.page,
+.pied {
+  --c-bg: #f6f7f9;
+  --c-surface: #ffffff;
+  --c-text: #1d2330;
+  --c-muted: #5c6577;
+  --c-border: #dde1e8;
+  --c-link: #3b5bdb;
+}
+@media (prefers-color-scheme: dark) {
+  .page,
+  .pied {
+    --c-bg: #14171d;
+    --c-surface: #1d2129;
+    --c-text: #e6e9ef;
+    --c-muted: #9aa3b5;
+    --c-border: #2e3440;
+    --c-link: #9db0ff;
+  }
+  .page { color-scheme: dark; }
+}
+
+/* Gabarit des pages de contenu */
+.page {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+}
+.page a { color: var(--c-link); }
+.page a:focus-visible,
+.pied a:focus-visible,
+.page main:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+.evitement {
+  position: absolute;
+  left: 8px;
+  top: -100px;
+  padding: 8px 12px;
+  background: var(--c-surface);
+  border: 2px solid var(--c-link);
+  border-radius: 6px;
+  z-index: 10;
+}
+.evitement:focus { top: 8px; }
+.entete,
+.page main {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.entete { padding-block: 20px; }
+.entete a { font-weight: 600; text-decoration: none; }
+.entete a:hover { text-decoration: underline; }
+.page main { padding-block: 8px 40px; }
+.page h1 { font-size: clamp(1.6rem, 4vw, 2rem); line-height: 1.2; margin: 0 0 16px; }
+.page h2 { font-size: 1.25rem; margin: 32px 0 8px; }
+.a-completer { background: #fff3bf; color: #1d2330; padding: 0 4px; border-radius: 4px; }
+
+/* Pied de page commun */
+.pied {
+  width: 100%;
+  border-top: 1px solid var(--c-border);
+  background: var(--c-surface);
+  color: var(--c-muted);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.pied ul {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 16px;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.pied a { color: var(--c-link); }
+.pied a[aria-current="page"] { font-weight: 600; text-decoration: none; }

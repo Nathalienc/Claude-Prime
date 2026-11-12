@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OUTILS VIBE CODING</title>
   <meta name="claude:viewport-fit-sides" content="cover">
+  <link rel="stylesheet" href="site.css">
   <style>
     :root {
       --bg: #f6f7f9;
@@ -146,7 +147,7 @@
     }
     .date { margin-top: auto; font-size: 0.8rem; color: var(--muted); }
     .vide { color: var(--muted); padding: 24px 0; }
-    footer { color: var(--muted); font-size: 0.85rem; padding-block: 0 40px; }
+    .source { color: var(--muted); font-size: 0.85rem; padding-block: 0 40px; }
   </style>
 </head>
 <body>
@@ -170,11 +171,25 @@
     <div class="grille" id="grille"></div>
   </main>
 
-  <footer class="wrap">
+  <p class="wrap source">
     Source : <a href="https://github.com/Scap-Mehdi/awesome-vibecoding">Scap-Mehdi/awesome-vibecoding</a>
     (CC0 1.0), README lu le 15/10/2026. « Vérifier les tarifs » signifie que le prix
     n'a pas été vérifié en détail. La date de vérification confirme l'offre et les
     conditions d'accès à ce jour-là ; ce n'est ni une date de sortie, ni un audit de sécurité.
+  </p>
+  <footer class="pied">
+    <nav aria-label="Pied de page">
+      <ul>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="aide.html">Aide</a></li>
+        <li><a href="info-site.html">Info site</a></li>
+        <li><a href="accessibilite.html">Accessibilité : non conforme</a></li>
+        <!-- À COMPLÉTER : transformer en lien vers l’adresse du site de shopping -->
+        <li>Site de shopping <span class="a-completer">[À COMPLÉTER : adresse du site]</span></li>
+        <li><a href="donnees-personnelles.html">Cookies / Données personnelles</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+      </ul>
+    </nav>
   </footer>
 
   <script>
