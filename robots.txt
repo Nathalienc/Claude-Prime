@@ -1,0 +1,84 @@
+# robots.txt – Claude-Prime (https://claude-prime-248.pages.dev)
+#
+# Réservation des droits de fouille de textes et de données (TDM) :
+# l'éditrice s'oppose à la fouille des contenus de ce site, notamment pour
+# l'entraînement de modèles d'IA, au sens de l'article L. 122-5-3, III du code
+# de la propriété intellectuelle et de l'article 4, paragraphe 3, de la
+# directive (UE) 2019/790. Voir https://claude-prime-248.pages.dev/Credits.html
+#
+# Content-Signal (politique Cloudflare) :
+#   search=yes   -> l'indexation par les moteurs de recherche est autorisée
+#   ai-train=no  -> l'entraînement ou l'ajustement de modèles d'IA est refusé
+
+# --- Tous les robots : indexation autorisée, entraînement IA refusé ---
+User-agent: *
+Content-Signal: search=yes, ai-train=no
+Allow: /
+
+# --- Robots d'entraînement d'IA : accès refusé ---
+
+# OpenAI
+User-agent: GPTBot
+Disallow: /
+
+# Anthropic
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+# Google (Gemini / Vertex AI) – n'affecte pas Google Search (Googlebot)
+User-agent: Google-Extended
+Disallow: /
+
+# Apple (Apple Intelligence) – n'affecte pas Applebot (recherche)
+User-agent: Applebot-Extended
+Disallow: /
+
+# Meta
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+# Amazon
+User-agent: Amazonbot
+Disallow: /
+
+# Common Crawl (archive utilisée par de nombreux modèles)
+User-agent: CCBot
+Disallow: /
+
+# ByteDance
+User-agent: Bytespider
+Disallow: /
+
+# Cohere
+User-agent: cohere-training-data-crawler
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+# Allen Institute for AI
+User-agent: AI2Bot
+Disallow: /
+
+# Huawei
+User-agent: PanguBot
+Disallow: /
+
+# Autres collecteurs de données pour l'IA
+User-agent: Diffbot
+Disallow: /
+
+User-agent: Timpibot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: omgili
+Disallow: /
