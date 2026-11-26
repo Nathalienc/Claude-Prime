@@ -1,0 +1,110 @@
+LICENSE – Claude-Prime
+Copyright (c) 2026 Nathalie Nino
+
+Ce projet contient deux types d'éléments, soumis à deux régimes différents :
+
+  1. le CODE, publié sous licence MIT ;
+  2. les CONTENUS ÉDITORIAUX, protégés par le droit d'auteur, tous droits réservés.
+
+En cas de doute sur la nature d'un élément, il est réputé relever de la partie 2.
+
+
+======================================================================
+1. CODE – Licence MIT
+======================================================================
+
+Relèvent de cette partie : la structure et le balisage HTML, les feuilles de
+style CSS (site.css et styles intégrés) et la logique JavaScript (scripts
+intégrés aux pages), à l'exclusion des textes et données éditoriales qu'ils
+contiennent (voir partie 2).
+
+Le texte officiel de la licence MIT, en anglais, fait seul foi :
+
+----------------------------------------------------------------------
+MIT License
+
+Copyright (c) 2026 Nathalie Nino
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+----------------------------------------------------------------------
+
+Résumé non contractuel : vous pouvez utiliser, copier, modifier et
+redistribuer le code, y compris à des fins commerciales, à condition de
+conserver la mention de copyright ci-dessus et le texte de la licence. Le code
+est fourni sans garantie.
+
+
+======================================================================
+2. CONTENUS ÉDITORIAUX – Tous droits réservés
+======================================================================
+
+Relèvent de cette partie, y compris lorsqu'ils figurent à l'intérieur d'un
+fichier de code :
+
+  - les textes des pages du site ;
+  - les intitulés, descriptions et commentaires de l'annuaire « Outils de
+    vibe coding » (notamment le tableau OUTILS de outils.html) ;
+  - la sélection, l'organisation et la présentation de cet annuaire.
+
+Ces contenus sont protégés par le code de la propriété intellectuelle.
+Toute reproduction, représentation, adaptation ou traduction, totale ou
+partielle, sans autorisation écrite préalable de l'autrice est interdite,
+sous réserve des exceptions prévues par la loi, notamment le droit de courte
+citation (article L. 122-5, 3° du code de la propriété intellectuelle), sous
+réserve d'indiquer clairement le nom de l'autrice et la source.
+
+Demande d'autorisation : https://github.com/nathalienc/claude-prime/issues
+ou via la page Contact du site.
+
+
+======================================================================
+3. RÉSERVATION DES DROITS DE FOUILLE DE TEXTES ET DE DONNÉES
+======================================================================
+
+Conformément à l'article 4, paragraphe 3, de la directive (UE) 2019/790 et à
+l'article L. 122-5-3, III du code de la propriété intellectuelle, l'autrice
+s'oppose expressément à toute fouille de textes et de données portant sur les
+contenus éditoriaux définis à la partie 2, notamment en vue de l'entraînement,
+de l'ajustement ou de l'évaluation de modèles d'intelligence artificielle,
+sauf autorisation écrite préalable.
+
+Cette opposition est également exprimée de façon lisible par machine dans le
+fichier robots.txt du site.
+
+
+======================================================================
+4. ÉLÉMENTS TIERS
+======================================================================
+
+Les noms, logos et marques des outils cités appartiennent à leurs
+propriétaires respectifs. Les sites et logiciels vers lesquels pointent les
+liens externes restent soumis à leurs propres licences et conditions.
+
+Si un composant tiers est ajouté au projet, sa licence d'origine s'applique à
+ce composant et sa mention de copyright est conservée.
+
+
+======================================================================
+5. CONTRIBUTIONS
+======================================================================
+
+En proposant une contribution (pull request, correctif, suggestion de code),
+vous acceptez qu'elle soit diffusée sous la licence MIT si elle relève du
+code, et que l'autrice puisse l'intégrer, la modifier et la publier si elle
+relève des contenus éditoriaux.
